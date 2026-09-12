@@ -1,3 +1,31 @@
-This technical submission outlines an end to end data acquisition, auditing, and preprocessing pipeline conducted on the California Housing Prices dataset using Python. Sourced from historical census records, the dataset encompasses 20,640 district observations across ten continuous, spatial, and categorical features. Initial exploratory data analysis revealed critical data hygiene concerns: total_bedrooms contained 207 missing entries, several structural metrics exhibited heavy positive skewness with high-leverage outliers, and ocean_proximity was stored as unencoded text labels.
+# California Housing: Data Cleaning and Preprocessing Pipeline
 
-To ensure statistical reliability for subsequent machine learning models, systematic preprocessing was performed. Duplicate rows were audited and verified. Missing values in total_bedrooms were resolved via median imputation, chosen over the mean to prevent distortion from extreme right-tail values. Outliers in total_rooms, total_bedrooms, population, and households were addressed through the Interquartile Range method. Rather than discarding data points and reducing sample size, values exceeding 1.5 times the IQR Tukey fences were capped at upper and lower boundaries. The categorical variable ocean_proximity was transformed into binary indicator columns using one-hot encoding with dummy-variable trap prevention. The cleaned dataset contains zero missing values, controlled variance across numerical distributions, and fully numeric representations optimized for downstream regression and gradient-based estimators.
+## Overview
+
+This repository contains the end-to-end data acquisition, cleaning, and preprocessing workflow for the California Housing dataset.
+
+## Dataset url:
+
+https://www.kaggle.com/datasets/camnugent/california-housing-prices
+
+## Dataset Description
+
+- **Source**: 1990 California Housing Census Dataset
+- **Records**: 20,640 census blocks
+- **Original Features**: 10 (numerical coordinates, housing metrics, income, target value, and spatial categorical feature)
+
+## Pipeline Stages
+
+1. **Initial Data Audit**: Identified structural types, summary statistics, and missing values.
+2. **Missing Value Imputation**: Imputed 207 missing values in `total_bedrooms` using the feature median to prevent skewness bias.
+3. **Deduplication**: Audited records to ensure zero redundant duplicate rows.
+4. **Outlier Treatment**: Applied Interquartile Range (IQR) Tukey fences (1.5 \* IQR) to cap extreme values in `total_rooms`, `total_bedrooms`, `population`, and `households`.
+5. **Categorical Encoding**: One-hot encoded `ocean_proximity` using binary indicators (`drop_first=True`).
+6. **Data Export**: Serialized the processed dataset to `california_housing_cleaned.csv`.
+
+## Setup and Execution
+
+```bash
+pip install -r requirements.txt
+jupyter notebook house.ipynb
+```
